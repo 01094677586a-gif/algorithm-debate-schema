@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Algorithm Debate Metadata Schema</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #5b6472;
+      --line: #d8dde8;
+      --accent: #243b6b;
+      --soft: #edf2ff;
+      --code: #101827;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; line-height: 1.6; background: var(--bg); color: var(--ink); }
+    header { background: linear-gradient(135deg, #1f2f5f, #3e5c9a); color: white; padding: 56px 8vw 44px; }
+    header h1 { margin: 0 0 12px; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.15; }
+    header p { max-width: 980px; margin: 0; font-size: 1.1rem; opacity: .96; }
+    nav { position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); padding: 10px 8vw; display: flex; gap: 14px; flex-wrap: wrap; }
+    nav a { color: var(--accent); text-decoration: none; font-weight: 700; font-size: .95rem; }
+    main { width: min(1160px, 92vw); margin: 28px auto 80px; }
+    section { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 28px; margin: 22px 0; box-shadow: 0 6px 18px rgba(26,40,73,.06); }
+    h2 { margin-top: 0; color: var(--accent); font-size: 1.75rem; }
+    h3 { color: #2d477d; margin-top: 28px; }
+    p { margin: 0 0 1rem; }
+    .note { background: var(--soft); border-left: 5px solid var(--accent); padding: 14px 16px; border-radius: 10px; margin: 18px 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: #fbfcff; }
+    .card h3 { margin-top: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 26px; font-size: .95rem; }
+    th, td { border: 1px solid var(--line); padding: 10px 12px; vertical-align: top; }
+    th { background: #edf2ff; color: #1f2f5f; text-align: left; }
+    code { font-family: Consolas, Monaco, 'Courier New', monospace; background: #f0f3fa; padding: 2px 5px; border-radius: 5px; }
+    pre { background: var(--code); color: #f9fafb; overflow: auto; padding: 18px; border-radius: 12px; font-size: .88rem; line-height: 1.45; max-height: 540px; }
+    .download-list a { display: inline-block; margin: 6px 10px 6px 0; padding: 10px 12px; border: 1px solid var(--accent); border-radius: 10px; text-decoration: none; color: var(--accent); font-weight: 700; background: white; }
+    .small { color: var(--muted); font-size: .93rem; }
+    footer { text-align: center; color: var(--muted); padding: 30px; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Algorithm Debate Metadata Schema</h1>
+  <p>A metadata schema for describing web resources that discuss the advantages and disadvantages of algorithms, especially in social media, recommendation systems, and digital platform environments.</p>
+</header>
+<nav>
+  <a href="#opening">Opening Narrative</a>
+  <a href="#standards">Metadata Standards</a>
+  <a href="#vocabulary">Vocabulary Specification</a>
+  <a href="#xsd">XSD File</a>
+  <a href="#xml">Sample XML Records</a>
+</nav>
+<main>
+<section id="opening">
+  <h2>1. Opening Narrative</h2>
+  <p>The general domain of this schema focuses on arguments about the advantages and disadvantages of algorithms, particularly those used in digital platforms such as social media and content recommendation systems. Algorithms play a significant role in shaping users’ online experiences by filtering, prioritizing, ranking, moderating, and recommending information. At the same time, they raise concerns about bias, lack of transparency, filter bubbles, data privacy, and the social effects of automated decision-making.</p>
+  <p>Metadata is useful in this domain because algorithm-related debates are distributed across many formats and platforms. A single debate may appear in a news article, blog post, research paper, YouTube video, Reddit discussion thread, X thread, policy report, podcast episode, user review, or fact-check article. Without a structured schema, it is difficult to compare these resources consistently or to identify their claims, stances, evidence, platforms, and topics.</p>
+  <p>This schema is designed as a descriptive framework for organizing different perspectives on algorithmic systems. It does not decide whether algorithms are good or bad. Instead, it records how a resource presents its argument: what type of resource it is, who created it, where it was published, what claims it makes, what stance it takes, which algorithm topic it discusses, and what supporting evidence it provides.</p>
+  <p>The intended audience primarily consists of users in their teens to thirties who frequently interact with algorithm-driven platforms such as social media, streaming services, search systems, and online recommendation environments. Secondary users include educators, students, researchers, platform users, and older adults who increasingly use digital technologies and may benefit from a clearer explanation of algorithmic debates.</p>
+  <div class="note">
+    <strong>Development note:</strong> The schema developed from an initial domain description and exemplar objects into a structured vocabulary, then into an XSD and validating XML records. Feedback from the Draft 4 stage led to clearer design-intent comments and to the decision to retain <code>dcterms:type</code> while documenting a project-specific controlled vocabulary for type values.
+  </div>
+</section>
+
+<section id="standards">
+  <h2>2. Relevant Metadata Standards</h2>
+  <p>This project uses existing metadata vocabularies where they fit the purpose of the schema and defines local <code>alg:</code> elements when the project needs algorithm-debate-specific description or a self-contained XSD structure.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Dublin Core Terms</h3>
+      <p><strong>Prefix:</strong> <code>dcterms</code><br><strong>Namespace:</strong> <code>http://purl.org/dc/terms/</code></p>
+      <p>Dublin Core Terms is used for general descriptive metadata: <code>dcterms:title</code>, <code>dcterms:creator</code>, <code>dcterms:date</code>, <code>dcterms:description</code>, and <code>dcterms:type</code>. These elements provide a stable vocabulary for describing resources across formats.</p>
+    </div>
+    <div class="card">
+      <h3>Schema.org</h3>
+      <p><strong>Prefix in Draft 3:</strong> <code>schema</code><br><strong>Namespace:</strong> <code>https://schema.org/</code></p>
+      <p>Schema.org inspired the URL element because the schema describes web-based resources. In the final XSD, this function is implemented locally as <code>alg:url</code>, inspired by <code>schema:url</code>, because Schema.org is used as a semantic reference rather than as an imported XSD vocabulary.</p>
+    </div>
+    <div class="card">
+      <h3>PROV-O</h3>
+      <p><strong>Prefix in Draft 3:</strong> <code>prov</code><br><strong>Namespace:</strong> <code>http://www.w3.org/ns/prov#</code></p>
+      <p>PROV-O inspired the attribution element. In the final XSD, <code>alg:attributedAgent</code> is inspired by <code>prov:wasAttributedTo</code> and records the person, organization, or group to whom a claim, evidence, or argumentative position is attributed.</p>
+    </div>
+    <div class="card">
+      <h3>Argument Interchange Format (AIF)</h3>
+      <p>AIF is used conceptually rather than as a directly imported metadata schema. It influenced the argument-centered structure of the local elements, especially <code>alg:claim</code> and <code>alg:supportingEvidence</code>.</p>
+    </div>
+  </div>
+  <p class="small">Other standards considered during development included CIDOC CRM, DataCite, and DCAT. They were useful for thinking about events, identifiers, and collections, but they were not directly implemented in the final XSD.</p>
+</section>
+
+<section id="vocabulary">
+  <h2>3. Vocabulary Specification</h2>
+  <h3>Element Overview Table</h3>
+  <table><thead><tr><th>Element Name</th><th>Brief Definition</th></tr></thead><tbody><tr><td><code>dcterms:title</code></td><td>The title of the resource or debate object.</td></tr><tr><td><code>dcterms:creator</code></td><td>The person, organization, or group responsible for creating the resource.</td></tr><tr><td><code>dcterms:date</code></td><td>The date on which the resource was created or published.</td></tr><tr><td><code>dcterms:description</code></td><td>A brief summary or description of the resource content.</td></tr><tr><td><code>dcterms:type</code></td><td>The genre or form of the resource, using a project-specific controlled vocabulary.</td></tr><tr><td><code>alg:url</code></td><td>The stable or official web address where the resource can be accessed; inspired by schema:url.</td></tr><tr><td><code>alg:attributedAgent</code></td><td>The agent to whom a claim, evidence, or argumentative position is attributed; inspired by prov:wasAttributedTo.</td></tr><tr><td><code>alg:claim</code></td><td>The primary argument or assertion expressed in the resource.</td></tr><tr><td><code>alg:stance</code></td><td>The resource’s overall position toward the algorithm or algorithmic system.</td></tr><tr><td><code>alg:algorithmTopic</code></td><td>The main algorithm-related issue or debate topic discussed in the resource.</td></tr><tr><td><code>alg:platform</code></td><td>The online platform or media environment where the resource was published, distributed, or accessed.</td></tr><tr><td><code>alg:supportingEvidence</code></td><td>The evidence used to support or justify the claim.</td></tr></tbody></table>
+  <h3>Full Data Dictionary</h3>
+  <table>
+<thead><tr><th>Element name</th><th>Label</th><th>URI</th><th>Full definition</th><th>Data values</th><th>Controlled vocabulary</th><th>Cardinality</th><th>Comments</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>dcterms:title</td><td>Title</td><td>http://purl.org/dc/terms/title</td><td>Records the name or title given to the resource. This element helps identify the resource in a human-readable form.</td><td>Text string</td><td>Not applicable</td><td>Mandatory: Yes / Repeatable: No</td><td>Use the original title of the resource when available.</td><td>Code-Dependent: Pros and Cons of the Algorithm Age</td></tr>
+<tr><td>dcterms:creator</td><td>Creator</td><td>http://purl.org/dc/terms/creator</td><td>Identifies the person, organization, or group primarily responsible for creating the resource.</td><td>Text string</td><td>Not applicable</td><td>Mandatory: Yes / Repeatable: Yes</td><td>This element describes the creator of the resource itself and should be distinguished from alg:attributedAgent, which refers to the agent associated with a specific claim, evidence, or argumentative position.</td><td>Lee Rainie; Janna Anderson</td></tr>
+<tr><td>dcterms:date</td><td>Date</td><td>http://purl.org/dc/terms/date</td><td>Records the date associated with the creation or publication of the resource.</td><td>Date, preferably in ISO 8601 format: YYYY-MM-DD</td><td>Not applicable</td><td>Mandatory: Yes / Repeatable: No</td><td>Use the publication date when available. If the publication date is unavailable, use the creation date.</td><td>2017-02-08</td></tr>
+<tr><td>dcterms:description</td><td>Description</td><td>http://purl.org/dc/terms/description</td><td>Provides a brief summary or description of the resource’s content.</td><td>Text string</td><td>Not applicable</td><td>Mandatory: No / Repeatable: No</td><td>This element should summarize the overall resource, while alg:claim should record the main argumentative statement.</td><td>A Pew Research Center report about experts’ views on the benefits and risks of algorithms in society.</td></tr>
+<tr><td>dcterms:type</td><td>Type</td><td>http://purl.org/dc/terms/type</td><td>Identifies the genre or form of the resource. The element name is retained from Dublin Core Terms.</td><td>String, using a project-specific controlled vocabulary</td><td>News Article; Blog Post; Research Paper; Discussion Thread; Video; Podcast Episode; User Review; Fact-check Article; Policy Report; Explainer; Report</td><td>Mandatory: Yes / Repeatable: No</td><td>This schema keeps the dcterms:type element name but does not use a Dublin Core controlled vocabulary for values. Instead, it uses a local vocabulary developed for algorithm debate resources. This element should be distinguished from alg:platform, which identifies the publication or access environment.</td><td>Report</td></tr>
+<tr><td>alg:url</td><td>URL</td><td>http://example.org/alg#url</td><td>Provides the web address where the resource can be accessed.</td><td>URI / URL string</td><td>Not applicable</td><td>Mandatory: No / Repeatable: No</td><td>This element is inspired by schema:url from Schema.org, but it is locally defined in the alg namespace because Schema.org is used as a semantic reference rather than an imported XSD vocabulary. Use the most stable or official URL available for the resource.</td><td>https://www.pewresearch.org/internet/2017/02/08/code-dependent-pros-and-cons-of-the-algorithm-age/</td></tr>
+<tr><td>alg:attributedAgent</td><td>Attributed Agent</td><td>http://example.org/alg#attributedAgent</td><td>Identifies the agent to whom the claim, evidence, or argumentative position presented in the resource is attributed.</td><td>Text string</td><td>Not applicable</td><td>Mandatory: No / Repeatable: Yes</td><td>This element is inspired by PROV-O’s prov:wasAttributedTo property, but it is locally implemented as a simple text element. It should be distinguished from dcterms:creator, which identifies the creator of the resource itself.</td><td>Pew Research Center</td></tr>
+<tr><td>alg:claim</td><td>Claim</td><td>http://example.org/alg#claim</td><td>Records the primary argumentative statement expressed in the resource about an algorithm or algorithmic system.</td><td>Text string</td><td>Not applicable</td><td>Mandatory: Yes / Repeatable: Yes</td><td>Claims should be expressed as concise declarative statements representing the main argumentative point of the resource. Multiple claims may be used when a resource presents more than one position.</td><td>Algorithms can save lives, make things easier, and help organize complex information.</td></tr>
+<tr><td>alg:stance</td><td>Stance</td><td>http://example.org/alg#stance</td><td>Indicates the resource’s position toward the algorithm or algorithmic system being discussed.</td><td>String, controlled vocabulary</td><td>Supportive; Critical; Neutral; Mixed; Undefined</td><td>Mandatory: Yes / Repeatable: No</td><td>This element should describe the overall stance of the resource rather than the emotional tone of individual sentences. Mixed is used when a resource presents both benefits and risks.</td><td>Mixed</td></tr>
+<tr><td>alg:algorithmTopic</td><td>Algorithm Topic</td><td>http://example.org/alg#algorithmTopic</td><td>Identifies the main algorithm-related issue or debate topic discussed in the resource.</td><td>String, controlled vocabulary</td><td>Recommendation Algorithm; Algorithmic Bias; Filter Bubble; Transparency; Personalization; Content Moderation; Data Privacy</td><td>Mandatory: Yes / Repeatable: Yes</td><td>Multiple values may be assigned when a resource discusses more than one algorithm-related issue.</td><td>Recommendation Algorithm; Personalization</td></tr>
+<tr><td>alg:platform</td><td>Platform</td><td>http://example.org/alg#platform</td><td>Specifies the online platform or media environment where the resource was published, distributed, or accessed.</td><td>String, controlled vocabulary</td><td>Reddit; X; YouTube; TikTok; Instagram; Facebook; Blog; News Media; Podcast Platform; Academic Journal</td><td>Mandatory: Yes / Repeatable: No</td><td>This element describes the publishing or distribution environment of the resource and should be distinguished from dcterms:type, which describes the genre or form of the resource.</td><td>News Media</td></tr>
+<tr><td>alg:supportingEvidence</td><td>Supporting Evidence</td><td>http://example.org/alg#supportingEvidence</td><td>Describes the evidence used to support or justify the claim made in the resource.</td><td>Text string</td><td>Not applicable</td><td>Mandatory: No / Repeatable: Yes</td><td>Evidence may include research findings, statistics, expert opinions, examples, or user experiences used to justify a claim.</td><td>The source states that experts worry algorithms can perpetuate bias, create filter bubbles, and worsen digital divides.</td></tr>
+</tbody></table>
+</section>
+
+<section id="xsd">
+  <h2>4. XSD File</h2>
+  <p>The final XSD defines the structure and validation rules for the Algorithm Debate Metadata Schema. It includes <code>xs:documentation</code> annotations and design-intent comments explaining why selected external vocabularies were retained, adapted, or locally implemented.</p>
+  <div class="download-list">
+    <a href="algorithm_debate_schema_final_revised.xsd">Open / download final XSD</a>
+  </div>
+  <div class="note">
+    <strong>Important design decision:</strong> <code>dcterms:type</code> is retained as the element name because it is the Dublin Core Terms element for the genre or form of a resource. However, this schema does not use a Dublin Core controlled vocabulary for type values. Instead, it documents a project-specific controlled vocabulary for algorithm debate resources, such as <em>Explainer</em>, <em>Report</em>, <em>Video</em>, and <em>Discussion Thread</em>.
+  </div>
+  <h3>XSD Preview</h3>
+  <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!--
+    Final revised XSD for the Algorithm Debate Metadata Schema.
+
+    Design intent:
+    This XSD describes metadata records for resources that discuss the advantages and disadvantages
+    of algorithms, especially algorithms used in digital platforms such as social media, content
+    recommendation systems, and online information environments. The schema combines general
+    descriptive metadata with project-specific elements for claims, stance, algorithm topic, platform,
+    attribution, and supporting evidence.
+
+    Namespace design:
+    Dublin Core Terms is used for general descriptive metadata elements that already have widely
+    recognized meanings, including dcterms:title, dcterms:creator, dcterms:date, dcterms:description,
+    and dcterms:type. The local alg namespace is used for elements that are specific to this algorithm
+    debate project or that adapt concepts from other vocabularies for a self-contained XSD.
+
+    Design changes after Draft 3 and Draft 4 feedback:
+    In Draft 3, schema:url and prov:wasAttributedTo were listed as borrowed vocabulary elements.
+    In this final XSD, their functions are implemented as alg:url and alg:attributedAgent. alg:url is
+    inspired by Schema.org&#x27;s url property, but it is defined locally because Schema.org is used here as
+    a semantic reference rather than as an imported XSD vocabulary. alg:attributedAgent is inspired by
+    PROV-O&#x27;s prov:wasAttributedTo property, but it is defined locally as a simple text element because
+    this educational schema records attribution in a lightweight form.
+
+    The most important revision concerns dcterms:type. I retain dcterms:type as the element name
+    because it is the Dublin Core Terms element for describing the genre or form of a resource, and the
+    Dublin Core Terms XML Schema can be imported and referenced directly. However, this project does
+    not adopt a Dublin Core controlled vocabulary for type values. Instead, it documents a
+    project-specific controlled vocabulary for algorithm debate resources: News Article, Blog Post,
+    Research Paper, Discussion Thread, Video, Podcast Episode, User Review, Fact-check Article,
+    Policy Report, Explainer, and Report. This decision preserves the semantic connection to Dublin
+    Core while making clear that the values are chosen for this project&#x27;s corpus.
+
+    XSD validation note:
+    The imported dcterms:type element is referenced directly with ref=&quot;dcterms:type&quot;. Because it is an
+    imported Dublin Core element, this XSD documents the project-specific type vocabulary in
+    xs:documentation rather than redefining the external dcterms:type element as a local alg element.
+--&gt;
+&lt;xs:schema
+    xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+    xmlns=&quot;http://example.org/alg#&quot;
+    xmlns:alg=&quot;http://example.org/alg#&quot;
+    xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot;
+    targetNamespace=&quot;http://example.org/alg#&quot;
+    elementFormDefault=&quot;qualified&quot;
+    attributeFormDefault=&quot;unqualified&quot;&gt;
+
+    &lt;!--
+        External schema import.
+        Design intent: Dublin Core Terms is imported for widely used descriptive metadata elements.
+        Schema.org and PROV-O are not imported because this project uses them as semantic references,
+        while their relevant functions are implemented locally in the alg namespace.
+    --&gt;
+    &lt;xs:import namespace=&quot;http://purl.org/dc/terms/&quot;
+               schemaLocation=&quot;https://www.dublincore.org/schemas/xmls/qdc/dcterms.xsd&quot;/&gt;
+
+    &lt;!--
+        Root element declaration.
+        Design intent: algorithmDebateRecord represents one complete metadata record for a single
+        resource or debate object about algorithms, such as a video, discussion thread, article,
+        podcast episode, user review, fact-check article, explainer, or policy report.
+    --&gt;
+    &lt;xs:element name=&quot;algorithmDebateRecord&quot; type=&quot;alg:algorithmDebateRecordType&quot;&gt;
+        &lt;xs:annotation&gt;
+            &lt;xs:documentation&gt;
+                A single metadata record describing a resource that presents one or more claims, stances, or evidence about an algorithm or algorithmic system.
+            &lt;/xs:documentation&gt;
+        &lt;/xs:annotation&gt;
+    &lt;/xs:element&gt;
+
+    &lt;!--
+        Main record structure.
+        Design intent: The sequence begins with general descriptive metadata from Dublin Core Terms,
+        followed by local alg elements that describe the algorithm-debate-specific content. A fixed
+        sequence is used to make the schema easier to read and validate for a small educational XML collection.
+    --&gt;
+    &lt;xs:complexType name=&quot;algorithmDebateRecordType&quot;&gt;
+        &lt;xs:sequence&gt;
+
+            &lt;!--
+                dcterms:title is imported from Dublin Core Terms.
+                Design intent: This element identifies the resource or debate object in a human-readable way.
+            --&gt;
+            &lt;xs:element ref=&quot;dcterms:title&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        The title of the resource or debate object.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                dcterms:creator is imported from Dublin Core Terms.
+                Design intent: This element records the creator of the whole resource, not the agent to whom
+                a specific claim or argumentative position is attributed. It is repeatable because a resource
+                may have multiple creators, such as authors, organizations, or platform users.
+            --&gt;
+            &lt;xs:element ref=&quot;dcterms:creator&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        The person, organization, or group primarily responsible for creating the resource.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                dcterms:date is imported from Dublin Core Terms.
+                Design intent: This element records the creation or publication date of the resource. The
+                data dictionary recommends a consistent date format such as YYYY-MM-DD, while the imported
+                Dublin Core element is retained for interoperability.
+            --&gt;
+            &lt;xs:element ref=&quot;dcterms:date&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        The date associated with the creation or publication of the resource, preferably in ISO 8601 format: YYYY-MM-DD.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                dcterms:description is imported from Dublin Core Terms.
+                Design intent: This optional element provides a general summary of the whole resource. It is
+                separate from alg:claim because alg:claim records specific argumentative statements.
+            --&gt;
+            &lt;xs:element ref=&quot;dcterms:description&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        A brief summary or description of the resource content.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                dcterms:type is imported from Dublin Core Terms and retained as the element name.
+                Design intent: This element identifies the genre or form of the resource. I retain the
+                Dublin Core Terms name because it is the appropriate standard element for resource type.
+                However, this schema does not use a Dublin Core controlled vocabulary for type values.
+                Instead, it documents a project-specific controlled vocabulary for algorithm debate resources:
+                News Article; Blog Post; Research Paper; Discussion Thread; Video; Podcast Episode; User Review;
+                Fact-check Article; Policy Report; Explainer; Report.
+            --&gt;
+            &lt;xs:element ref=&quot;dcterms:type&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Identifies the genre or type of the resource. The element name is retained from Dublin Core Terms, but the intended values come from this project&#x27;s controlled vocabulary: News Article; Blog Post; Research Paper; Discussion Thread; Video; Podcast Episode; User Review; Fact-check Article; Policy Report; Explainer; Report.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:url is inspired by schema:url from Schema.org.
+                Design intent: This element records the stable or official web address where the resource can
+                be accessed. It is implemented as a local alg element because Schema.org is used as a semantic
+                reference here, not as an imported XSD vocabulary.
+            --&gt;
+            &lt;xs:element name=&quot;url&quot; type=&quot;xs:anyURI&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Provides the web address where the resource can be accessed. Use the most stable or official URL available for the resource.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:attributedAgent is inspired by prov:wasAttributedTo from PROV-O.
+                Design intent: This element records the person, group, organization, or participant to whom a
+                claim, evidence, or argumentative position is attributed. It is implemented as a local alg
+                element because PROV-O is used as a semantic reference, not as an imported XSD vocabulary.
+                In this educational schema, the attributed agent is recorded as a text string rather than a URI
+                reference to a PROV Agent.
+            --&gt;
+            &lt;xs:element name=&quot;attributedAgent&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Identifies the person, group, organization, or participant to whom a claim, supporting evidence, or argumentative position is attributed.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:claim is a local domain-specific element inspired by argumentation models such as AIF.
+                Design intent: This element is required because the schema describes resources that present
+                arguments about algorithms. It is repeatable because a single resource may contain multiple
+                claims, including both supportive and critical claims.
+            --&gt;
+            &lt;xs:element name=&quot;claim&quot; type=&quot;xs:string&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        The primary argument or assertion expressed in the resource about an algorithm or algorithmic system.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:stance uses a controlled vocabulary.
+                Design intent: This element records the overall position of the resource toward the algorithm
+                or algorithmic system. A controlled vocabulary keeps stance values consistent across records.
+                Mixed is included for resources that present both positive and negative positions.
+            --&gt;
+            &lt;xs:element name=&quot;stance&quot; type=&quot;alg:stanceVocabulary&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Indicates the resource&#x27;s position toward the algorithm or algorithmic system being discussed.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:algorithmTopic uses a controlled vocabulary.
+                Design intent: This element identifies the main algorithm-related issue or debate topic
+                discussed in the resource. It is repeatable because one resource can discuss more than one
+                issue, such as Recommendation Algorithm and Personalization.
+            --&gt;
+            &lt;xs:element name=&quot;algorithmTopic&quot; type=&quot;alg:algorithmTopicVocabulary&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Identifies the main algorithm-related issue or debate topic discussed in the resource.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:platform uses a controlled vocabulary.
+                Design intent: This element records the platform or media environment where the resource was
+                published, distributed, or accessed. It is distinct from dcterms:type: dcterms:type describes
+                the genre or form of the resource, while alg:platform describes the publication or access environment.
+            --&gt;
+            &lt;xs:element name=&quot;platform&quot; type=&quot;alg:platformVocabulary&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Specifies the online platform or media environment where the resource was published, distributed, or accessed.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+            &lt;!--
+                alg:supportingEvidence is a local domain-specific element inspired by argumentation structure.
+                Design intent: This element records information used to support or justify claims. It is optional
+                because some resources may present claims without explicit evidence, and it is repeatable because
+                evidence may appear as several examples, studies, statistics, expert opinions, or user experiences.
+            --&gt;
+            &lt;xs:element name=&quot;supportingEvidence&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                &lt;xs:annotation&gt;
+                    &lt;xs:documentation&gt;
+                        Describes the evidence used to support or justify the claim made in the resource.
+                    &lt;/xs:documentation&gt;
+                &lt;/xs:annotation&gt;
+            &lt;/xs:element&gt;
+
+        &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+
+    &lt;!--
+        Controlled vocabulary for alg:stance.
+        Design intent: This simpleType restricts alg:stance to a small set of values used to classify the
+        overall argumentative position of each resource.
+    --&gt;
+    &lt;xs:simpleType name=&quot;stanceVocabulary&quot;&gt;
+        &lt;xs:annotation&gt;
+            &lt;xs:documentation&gt;
+                Controlled vocabulary for classifying the resource&#x27;s overall stance toward the algorithm or algorithmic system.
+            &lt;/xs:documentation&gt;
+        &lt;/xs:annotation&gt;
+        &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+            &lt;xs:enumeration value=&quot;Supportive&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Critical&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Neutral&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Mixed&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Undefined&quot;/&gt;
+        &lt;/xs:restriction&gt;
+    &lt;/xs:simpleType&gt;
+
+    &lt;!--
+        Controlled vocabulary for alg:algorithmTopic.
+        Design intent: This simpleType restricts alg:algorithmTopic to the algorithm debate topics defined
+        in the data dictionary. The controlled values keep topic descriptions consistent across records and
+        support browsing or retrieval by issue.
+    --&gt;
+    &lt;xs:simpleType name=&quot;algorithmTopicVocabulary&quot;&gt;
+        &lt;xs:annotation&gt;
+            &lt;xs:documentation&gt;
+                Controlled vocabulary for the main algorithm-related issue or debate topic discussed in the resource.
+            &lt;/xs:documentation&gt;
+        &lt;/xs:annotation&gt;
+        &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+            &lt;xs:enumeration value=&quot;Recommendation Algorithm&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Algorithmic Bias&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Filter Bubble&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Transparency&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Personalization&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Content Moderation&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Data Privacy&quot;/&gt;
+        &lt;/xs:restriction&gt;
+    &lt;/xs:simpleType&gt;
+
+    &lt;!--
+        Controlled vocabulary for alg:platform.
+        Design intent: This simpleType restricts alg:platform to a defined set of platform or media
+        environment values. This keeps platform names consistent and distinguishes the publication or access
+        environment from dcterms:type, which describes the genre or form of the resource.
+    --&gt;
+    &lt;xs:simpleType name=&quot;platformVocabulary&quot;&gt;
+        &lt;xs:annotation&gt;
+            &lt;xs:documentation&gt;
+                Controlled vocabulary for the online platform or media environment where the resource was published, distributed, or accessed.
+            &lt;/xs:documentation&gt;
+        &lt;/xs:annotation&gt;
+        &lt;xs:restriction base=&quot;xs:string&quot;&gt;
+            &lt;xs:enumeration value=&quot;Reddit&quot;/&gt;
+            &lt;xs:enumeration value=&quot;X&quot;/&gt;
+            &lt;xs:enumeration value=&quot;YouTube&quot;/&gt;
+            &lt;xs:enumeration value=&quot;TikTok&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Instagram&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Facebook&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Blog&quot;/&gt;
+            &lt;xs:enumeration value=&quot;News Media&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Podcast Platform&quot;/&gt;
+            &lt;xs:enumeration value=&quot;Academic Journal&quot;/&gt;
+        &lt;/xs:restriction&gt;
+    &lt;/xs:simpleType&gt;
+
+&lt;/xs:schema&gt;
+</code></pre>
+</section>
+
+<section id="xml">
+  <h2>5. Sample XML Records</h2>
+  <p>The following two sample XML records validate against the final XSD when the files are hosted together and the schema location points to the XSD file.</p>
+  <div class="download-list">
+    <a href="bpc_social_media_algorithms_final.xml">Open Sample XML 1</a>
+    <a href="pew_algorithm_age_final.xml">Open Sample XML 2</a>
+  </div>
+  <h3>Sample Record 1: BPC Social Media Algorithms Explainer</h3>
+  <p>This record describes an explainer resource about how social media algorithms shape information exposure, content ranking, and content moderation.</p>
+  <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;algorithmDebateRecord
+    xmlns=&quot;http://example.org/alg#&quot;
+    xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://example.org/alg# algorithm_debate_schema_final_revised.xsd&quot;&gt;
+
+    &lt;dcterms:title&gt;The Pros and Cons of Social Media Algorithms&lt;/dcterms:title&gt;
+    &lt;dcterms:creator&gt;Danielle Draper&lt;/dcterms:creator&gt;
+    &lt;dcterms:date&gt;2023-10-04&lt;/dcterms:date&gt;
+    &lt;dcterms:description&gt;An explainer from the Bipartisan Policy Center that gives a high-level overview of benefits and limitations of social media algorithms.&lt;/dcterms:description&gt;
+    &lt;dcterms:type&gt;Explainer&lt;/dcterms:type&gt;
+    &lt;url&gt;https://bipartisanpolicy.org/explainer/social-media-algorithms-pro-con/&lt;/url&gt;
+    &lt;attributedAgent&gt;Bipartisan Policy Center&lt;/attributedAgent&gt;
+    &lt;claim&gt;Social media algorithms have benefits, including sorting data, ranking content, and supporting content moderation at a scale that would be difficult for humans.&lt;/claim&gt;
+    &lt;claim&gt;Social media algorithms also have limitations and tradeoffs, including concerns about real-world harms and the challenges of maintaining safe digital environments.&lt;/claim&gt;
+    &lt;stance&gt;Mixed&lt;/stance&gt;
+    &lt;algorithmTopic&gt;Recommendation Algorithm&lt;/algorithmTopic&gt;
+    &lt;algorithmTopic&gt;Personalization&lt;/algorithmTopic&gt;
+    &lt;algorithmTopic&gt;Content Moderation&lt;/algorithmTopic&gt;
+    &lt;platform&gt;News Media&lt;/platform&gt;
+    &lt;supportingEvidence&gt;The source describes the document as a high-level overview of the benefits of social media algorithms while contrasting their limitations.&lt;/supportingEvidence&gt;
+    &lt;supportingEvidence&gt;The source states that social media algorithms are used for sorting data, ranking content, and content moderation.&lt;/supportingEvidence&gt;
+&lt;/algorithmDebateRecord&gt;
+</code></pre>
+  <h3>Sample Record 2: Pew Research Center Algorithm Age Report</h3>
+  <p>This record describes a report-style resource discussing expert views on the benefits and risks of algorithms in society.</p>
+  <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;algorithmDebateRecord
+    xmlns=&quot;http://example.org/alg#&quot;
+    xmlns:dcterms=&quot;http://purl.org/dc/terms/&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://example.org/alg# algorithm_debate_schema_final_revised.xsd&quot;&gt;
+
+    &lt;dcterms:title&gt;Code-Dependent: Pros and Cons of the Algorithm Age&lt;/dcterms:title&gt;
+    &lt;dcterms:creator&gt;Lee Rainie&lt;/dcterms:creator&gt;
+    &lt;dcterms:creator&gt;Janna Anderson&lt;/dcterms:creator&gt;
+    &lt;dcterms:date&gt;2017-02-08&lt;/dcterms:date&gt;
+    &lt;dcterms:description&gt;A Pew Research Center report about experts&#x27; views on the benefits and risks of algorithms in society.&lt;/dcterms:description&gt;
+    &lt;dcterms:type&gt;Report&lt;/dcterms:type&gt;
+    &lt;url&gt;https://www.pewresearch.org/internet/2017/02/08/code-dependent-pros-and-cons-of-the-algorithm-age/&lt;/url&gt;
+    &lt;attributedAgent&gt;Pew Research Center&lt;/attributedAgent&gt;
+    &lt;claim&gt;Algorithms can save lives, make things easier, and help organize complex information.&lt;/claim&gt;
+    &lt;claim&gt;Algorithms can also increase corporate and governmental control, produce biased results, create filter bubbles, reduce choice and serendipity, and worsen digital divides.&lt;/claim&gt;
+    &lt;stance&gt;Mixed&lt;/stance&gt;
+    &lt;algorithmTopic&gt;Algorithmic Bias&lt;/algorithmTopic&gt;
+    &lt;algorithmTopic&gt;Filter Bubble&lt;/algorithmTopic&gt;
+    &lt;algorithmTopic&gt;Personalization&lt;/algorithmTopic&gt;
+    &lt;platform&gt;News Media&lt;/platform&gt;
+    &lt;supportingEvidence&gt;The source states that algorithms can save lives, make things easier, and conquer chaos.&lt;/supportingEvidence&gt;
+    &lt;supportingEvidence&gt;The source states that experts worry algorithms can put too much control in the hands of corporations and governments, perpetuate bias, create filter bubbles, and worsen digital divides.&lt;/supportingEvidence&gt;
+&lt;/algorithmDebateRecord&gt;
+</code></pre>
+</section>
+</main>
+<footer>
+  Algorithm Debate Metadata Schema — Final Project Website
+</footer>
+</body>
+</html>

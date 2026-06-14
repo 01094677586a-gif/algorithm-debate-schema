@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithmDebateRecord
+    xmlns="http://example.org/alg#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://example.org/alg# algorithm_debate_schema_final_revised.xsd">
+
+    <dcterms:title>The Pros and Cons of Social Media Algorithms</dcterms:title>
+    <dcterms:creator>Danielle Draper</dcterms:creator>
+    <dcterms:date>2023-10-04</dcterms:date>
+    <dcterms:description>An explainer from the Bipartisan Policy Center that gives a high-level overview of benefits and limitations of social media algorithms.</dcterms:description>
+    <dcterms:type>Explainer</dcterms:type>
+    <url>https://bipartisanpolicy.org/explainer/social-media-algorithms-pro-con/</url>
+    <attributedAgent>Bipartisan Policy Center</attributedAgent>
+    <claim>Social media algorithms have benefits, including sorting data, ranking content, and supporting content moderation at a scale that would be difficult for humans.</claim>
+    <claim>Social media algorithms also have limitations and tradeoffs, including concerns about real-world harms and the challenges of maintaining safe digital environments.</claim>
+    <stance>Mixed</stance>
+    <algorithmTopic>Recommendation Algorithm</algorithmTopic>
+    <algorithmTopic>Personalization</algorithmTopic>
+    <algorithmTopic>Content Moderation</algorithmTopic>
+    <platform>News Media</platform>
+    <supportingEvidence>The source describes the document as a high-level overview of the benefits of social media algorithms while contrasting their limitations.</supportingEvidence>
+    <supportingEvidence>The source states that social media algorithms are used for sorting data, ranking content, and content moderation.</supportingEvidence>
+</algorithmDebateRecord>

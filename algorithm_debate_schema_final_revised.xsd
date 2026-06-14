@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Final revised XSD for the Algorithm Debate Metadata Schema.
+
+    Design intent:
+    This XSD describes metadata records for resources that discuss the advantages and disadvantages
+    of algorithms, especially algorithms used in digital platforms such as social media, content
+    recommendation systems, and online information environments. The schema combines general
+    descriptive metadata with project-specific elements for claims, stance, algorithm topic, platform,
+    attribution, and supporting evidence.
+
+    Namespace design:
+    Dublin Core Terms is used for general descriptive metadata elements that already have widely
+    recognized meanings, including dcterms:title, dcterms:creator, dcterms:date, dcterms:description,
+    and dcterms:type. The local alg namespace is used for elements that are specific to this algorithm
+    debate project or that adapt concepts from other vocabularies for a self-contained XSD.
+
+    Design changes after Draft 3 and Draft 4 feedback:
+    In Draft 3, schema:url and prov:wasAttributedTo were listed as borrowed vocabulary elements.
+    In this final XSD, their functions are implemented as alg:url and alg:attributedAgent. alg:url is
+    inspired by Schema.org's url property, but it is defined locally because Schema.org is used here as
+    a semantic reference rather than as an imported XSD vocabulary. alg:attributedAgent is inspired by
+    PROV-O's prov:wasAttributedTo property, but it is defined locally as a simple text element because
+    this educational schema records attribution in a lightweight form.
+
+    The most important revision concerns dcterms:type. I retain dcterms:type as the element name
+    because it is the Dublin Core Terms element for describing the genre or form of a resource, and the
+    Dublin Core Terms XML Schema can be imported and referenced directly. However, this project does
+    not adopt a Dublin Core controlled vocabulary for type values. Instead, it documents a
+    project-specific controlled vocabulary for algorithm debate resources: News Article, Blog Post,
+    Research Paper, Discussion Thread, Video, Podcast Episode, User Review, Fact-check Article,
+    Policy Report, Explainer, and Report. This decision preserves the semantic connection to Dublin
+    Core while making clear that the values are chosen for this project's corpus.
+
+    XSD validation note:
+    The imported dcterms:type element is referenced directly with ref="dcterms:type". Because it is an
+    imported Dublin Core element, this XSD documents the project-specific type vocabulary in
+    xs:documentation rather than redefining the external dcterms:type element as a local alg element.
+-->
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://example.org/alg#"
+    xmlns:alg="http://example.org/alg#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    targetNamespace="http://example.org/alg#"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+    <!--
+        External schema import.
+        Design intent: Dublin Core Terms is imported for widely used descriptive metadata elements.
+        Schema.org and PROV-O are not imported because this project uses them as semantic references,
+        while their relevant functions are implemented locally in the alg namespace.
+    -->
+    <xs:import namespace="http://purl.org/dc/terms/"
+               schemaLocation="https://www.dublincore.org/schemas/xmls/qdc/dcterms.xsd"/>
+
+    <!--
+        Root element declaration.
+        Design intent: algorithmDebateRecord represents one complete metadata record for a single
+        resource or debate object about algorithms, such as a video, discussion thread, article,
+        podcast episode, user review, fact-check article, explainer, or policy report.
+    -->
+    <xs:element name="algorithmDebateRecord" type="alg:algorithmDebateRecordType">
+        <xs:annotation>
+            <xs:documentation>
+                A single metadata record describing a resource that presents one or more claims, stances, or evidence about an algorithm or algorithmic system.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!--
+        Main record structure.
+        Design intent: The sequence begins with general descriptive metadata from Dublin Core Terms,
+        followed by local alg elements that describe the algorithm-debate-specific content. A fixed
+        sequence is used to make the schema easier to read and validate for a small educational XML collection.
+    -->
+    <xs:complexType name="algorithmDebateRecordType">
+        <xs:sequence>
+
+            <!--
+                dcterms:title is imported from Dublin Core Terms.
+                Design intent: This element identifies the resource or debate object in a human-readable way.
+            -->
+            <xs:element ref="dcterms:title" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        The title of the resource or debate object.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                dcterms:creator is imported from Dublin Core Terms.
+                Design intent: This element records the creator of the whole resource, not the agent to whom
+                a specific claim or argumentative position is attributed. It is repeatable because a resource
+                may have multiple creators, such as authors, organizations, or platform users.
+            -->
+            <xs:element ref="dcterms:creator" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        The person, organization, or group primarily responsible for creating the resource.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                dcterms:date is imported from Dublin Core Terms.
+                Design intent: This element records the creation or publication date of the resource. The
+                data dictionary recommends a consistent date format such as YYYY-MM-DD, while the imported
+                Dublin Core element is retained for interoperability.
+            -->
+            <xs:element ref="dcterms:date" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        The date associated with the creation or publication of the resource, preferably in ISO 8601 format: YYYY-MM-DD.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                dcterms:description is imported from Dublin Core Terms.
+                Design intent: This optional element provides a general summary of the whole resource. It is
+                separate from alg:claim because alg:claim records specific argumentative statements.
+            -->
+            <xs:element ref="dcterms:description" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        A brief summary or description of the resource content.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                dcterms:type is imported from Dublin Core Terms and retained as the element name.
+                Design intent: This element identifies the genre or form of the resource. I retain the
+                Dublin Core Terms name because it is the appropriate standard element for resource type.
+                However, this schema does not use a Dublin Core controlled vocabulary for type values.
+                Instead, it documents a project-specific controlled vocabulary for algorithm debate resources:
+                News Article; Blog Post; Research Paper; Discussion Thread; Video; Podcast Episode; User Review;
+                Fact-check Article; Policy Report; Explainer; Report.
+            -->
+            <xs:element ref="dcterms:type" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Identifies the genre or type of the resource. The element name is retained from Dublin Core Terms, but the intended values come from this project's controlled vocabulary: News Article; Blog Post; Research Paper; Discussion Thread; Video; Podcast Episode; User Review; Fact-check Article; Policy Report; Explainer; Report.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:url is inspired by schema:url from Schema.org.
+                Design intent: This element records the stable or official web address where the resource can
+                be accessed. It is implemented as a local alg element because Schema.org is used as a semantic
+                reference here, not as an imported XSD vocabulary.
+            -->
+            <xs:element name="url" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Provides the web address where the resource can be accessed. Use the most stable or official URL available for the resource.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:attributedAgent is inspired by prov:wasAttributedTo from PROV-O.
+                Design intent: This element records the person, group, organization, or participant to whom a
+                claim, evidence, or argumentative position is attributed. It is implemented as a local alg
+                element because PROV-O is used as a semantic reference, not as an imported XSD vocabulary.
+                In this educational schema, the attributed agent is recorded as a text string rather than a URI
+                reference to a PROV Agent.
+            -->
+            <xs:element name="attributedAgent" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Identifies the person, group, organization, or participant to whom a claim, supporting evidence, or argumentative position is attributed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:claim is a local domain-specific element inspired by argumentation models such as AIF.
+                Design intent: This element is required because the schema describes resources that present
+                arguments about algorithms. It is repeatable because a single resource may contain multiple
+                claims, including both supportive and critical claims.
+            -->
+            <xs:element name="claim" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        The primary argument or assertion expressed in the resource about an algorithm or algorithmic system.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:stance uses a controlled vocabulary.
+                Design intent: This element records the overall position of the resource toward the algorithm
+                or algorithmic system. A controlled vocabulary keeps stance values consistent across records.
+                Mixed is included for resources that present both positive and negative positions.
+            -->
+            <xs:element name="stance" type="alg:stanceVocabulary" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Indicates the resource's position toward the algorithm or algorithmic system being discussed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:algorithmTopic uses a controlled vocabulary.
+                Design intent: This element identifies the main algorithm-related issue or debate topic
+                discussed in the resource. It is repeatable because one resource can discuss more than one
+                issue, such as Recommendation Algorithm and Personalization.
+            -->
+            <xs:element name="algorithmTopic" type="alg:algorithmTopicVocabulary" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Identifies the main algorithm-related issue or debate topic discussed in the resource.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:platform uses a controlled vocabulary.
+                Design intent: This element records the platform or media environment where the resource was
+                published, distributed, or accessed. It is distinct from dcterms:type: dcterms:type describes
+                the genre or form of the resource, while alg:platform describes the publication or access environment.
+            -->
+            <xs:element name="platform" type="alg:platformVocabulary" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Specifies the online platform or media environment where the resource was published, distributed, or accessed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!--
+                alg:supportingEvidence is a local domain-specific element inspired by argumentation structure.
+                Design intent: This element records information used to support or justify claims. It is optional
+                because some resources may present claims without explicit evidence, and it is repeatable because
+                evidence may appear as several examples, studies, statistics, expert opinions, or user experiences.
+            -->
+            <xs:element name="supportingEvidence" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>
+                        Describes the evidence used to support or justify the claim made in the resource.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--
+        Controlled vocabulary for alg:stance.
+        Design intent: This simpleType restricts alg:stance to a small set of values used to classify the
+        overall argumentative position of each resource.
+    -->
+    <xs:simpleType name="stanceVocabulary">
+        <xs:annotation>
+            <xs:documentation>
+                Controlled vocabulary for classifying the resource's overall stance toward the algorithm or algorithmic system.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Supportive"/>
+            <xs:enumeration value="Critical"/>
+            <xs:enumeration value="Neutral"/>
+            <xs:enumeration value="Mixed"/>
+            <xs:enumeration value="Undefined"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--
+        Controlled vocabulary for alg:algorithmTopic.
+        Design intent: This simpleType restricts alg:algorithmTopic to the algorithm debate topics defined
+        in the data dictionary. The controlled values keep topic descriptions consistent across records and
+        support browsing or retrieval by issue.
+    -->
+    <xs:simpleType name="algorithmTopicVocabulary">
+        <xs:annotation>
+            <xs:documentation>
+                Controlled vocabulary for the main algorithm-related issue or debate topic discussed in the resource.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Recommendation Algorithm"/>
+            <xs:enumeration value="Algorithmic Bias"/>
+            <xs:enumeration value="Filter Bubble"/>
+            <xs:enumeration value="Transparency"/>
+            <xs:enumeration value="Personalization"/>
+            <xs:enumeration value="Content Moderation"/>
+            <xs:enumeration value="Data Privacy"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--
+        Controlled vocabulary for alg:platform.
+        Design intent: This simpleType restricts alg:platform to a defined set of platform or media
+        environment values. This keeps platform names consistent and distinguishes the publication or access
+        environment from dcterms:type, which describes the genre or form of the resource.
+    -->
+    <xs:simpleType name="platformVocabulary">
+        <xs:annotation>
+            <xs:documentation>
+                Controlled vocabulary for the online platform or media environment where the resource was published, distributed, or accessed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Reddit"/>
+            <xs:enumeration value="X"/>
+            <xs:enumeration value="YouTube"/>
+            <xs:enumeration value="TikTok"/>
+            <xs:enumeration value="Instagram"/>
+            <xs:enumeration value="Facebook"/>
+            <xs:enumeration value="Blog"/>
+            <xs:enumeration value="News Media"/>
+            <xs:enumeration value="Podcast Platform"/>
+            <xs:enumeration value="Academic Journal"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

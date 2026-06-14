@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithmDebateRecord
+    xmlns="http://example.org/alg#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://example.org/alg# algorithm_debate_schema_final_revised.xsd">
+
+    <dcterms:title>Code-Dependent: Pros and Cons of the Algorithm Age</dcterms:title>
+    <dcterms:creator>Lee Rainie</dcterms:creator>
+    <dcterms:creator>Janna Anderson</dcterms:creator>
+    <dcterms:date>2017-02-08</dcterms:date>
+    <dcterms:description>A Pew Research Center report about experts' views on the benefits and risks of algorithms in society.</dcterms:description>
+    <dcterms:type>Report</dcterms:type>
+    <url>https://www.pewresearch.org/internet/2017/02/08/code-dependent-pros-and-cons-of-the-algorithm-age/</url>
+    <attributedAgent>Pew Research Center</attributedAgent>
+    <claim>Algorithms can save lives, make things easier, and help organize complex information.</claim>
+    <claim>Algorithms can also increase corporate and governmental control, produce biased results, create filter bubbles, reduce choice and serendipity, and worsen digital divides.</claim>
+    <stance>Mixed</stance>
+    <algorithmTopic>Algorithmic Bias</algorithmTopic>
+    <algorithmTopic>Filter Bubble</algorithmTopic>
+    <algorithmTopic>Personalization</algorithmTopic>
+    <platform>News Media</platform>
+    <supportingEvidence>The source states that algorithms can save lives, make things easier, and conquer chaos.</supportingEvidence>
+    <supportingEvidence>The source states that experts worry algorithms can put too much control in the hands of corporations and governments, perpetuate bias, create filter bubbles, and worsen digital divides.</supportingEvidence>
+</algorithmDebateRecord>
