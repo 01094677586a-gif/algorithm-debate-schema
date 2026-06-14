@@ -59,6 +59,7 @@
   <h2>1. Opening Narrative</h2>
   <p>The general domain of this schema focuses on arguments about the advantages and disadvantages of algorithms, particularly those used in digital platforms such as social media and content recommendation systems. Algorithms play a significant role in shaping users’ online experiences by filtering, prioritizing, ranking, moderating, and recommending information. At the same time, they raise concerns about bias, lack of transparency, filter bubbles, data privacy, and the social effects of automated decision-making.</p>
   <p>Metadata is useful in this domain because algorithm-related debates are distributed across many formats and platforms. A single debate may appear in a news article, blog post, research paper, YouTube video, Reddit discussion thread, X thread, policy report, podcast episode, user review, or fact-check article. Without a structured schema, it is difficult to compare these resources consistently or to identify their claims, stances, evidence, platforms, and topics.</p>
+  <p>Both sample XML records are structured to validate against the hosted XSD file and demonstrate how the schema can be used for real web-based resources about algorithm debates.</p>
   <p>This schema is designed as a descriptive framework for organizing different perspectives on algorithmic systems. It does not decide whether algorithms are good or bad. Instead, it records how a resource presents its argument: what type of resource it is, who created it, where it was published, what claims it makes, what stance it takes, which algorithm topic it discusses, and what supporting evidence it provides.</p>
   <p>The intended audience primarily consists of users in their teens to thirties who frequently interact with algorithm-driven platforms such as social media, streaming services, search systems, and online recommendation environments. Secondary users include educators, students, researchers, platform users, and older adults who increasingly use digital technologies and may benefit from a clearer explanation of algorithmic debates.</p>
   <div class="note">
@@ -122,6 +123,13 @@
   <div class="download-list">
     <a href="algorithm_debate_schema_final_revised.xsd">Open / download final XSD</a>
   </div>
+
+  <p class="small">
+    Direct XSD URL:
+    <a href="https://01094677586a-gif.github.io/algorithm-debate-schema/algorithm_debate_schema_final_revised.xsd">
+      https://01094677586a-gif.github.io/algorithm-debate-schema/algorithm_debate_schema_final_revised.xsd
+    </a>
+  </p>
   <div class="note">
     <strong>Important design decision:</strong> <code>dcterms:type</code> is retained as the element name because it is the Dublin Core Terms element for the genre or form of a resource. However, this schema does not use a Dublin Core controlled vocabulary for type values. Instead, it documents a project-specific controlled vocabulary for algorithm debate resources, such as <em>Explainer</em>, <em>Report</em>, <em>Video</em>, and <em>Discussion Thread</em>.
   </div>
@@ -454,6 +462,7 @@
 
 <section id="xml">
   <h2>5. Sample XML Records</h2>
+  <p>Both sample XML records are structured to validate against the hosted XSD file and demonstrate how the schema can be used for real web-based resources about algorithm debates.</p>
   <p>The following two sample XML records validate against the final XSD when the files are hosted together and the schema location points to the XSD file.</p>
   <div class="download-list">
     <a href="bpc_social_media_algorithms_final.xml">Open Sample XML 1</a>
