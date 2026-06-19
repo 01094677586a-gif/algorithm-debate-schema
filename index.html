@@ -56,6 +56,21 @@
       display: block;
       white-space: pre;
     }
+
+    /* Prevent wide vocabulary tables from overflowing the page */
+    #vocabulary {
+      overflow-x: auto;
+    }
+
+    #vocabulary table {
+      min-width: 1150px;
+    }
+
+    #vocabulary th,
+    #vocabulary td {
+      word-break: normal;
+      overflow-wrap: normal;
+    }
   </style>
 </head>
 <body>
